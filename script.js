@@ -110,3 +110,21 @@ if (chatSend) chatSend.onclick = sendMessage;
 if (chatInput) {
     chatInput.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
 }
+
+let historico = [];
+
+async function enviarMensagem(prompt) {
+    const res = await fetch('/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, historico })
+    });
+
+    const data = await res.json();
+
+    // atualiza histórico com a troca atual
+    historico.push({ role: "user", content: prompt });
+    historico.push({ role: "assistant", content: data.text });
+
+    return data.text;
+}
