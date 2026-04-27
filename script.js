@@ -191,3 +191,71 @@ setTimeout(() => {
         }
     }, 6000);
 }, 2000);
+
+const avatar = document.querySelector('.avatar');
+const avatarImg = document.querySelector('.avatar img');
+
+if (avatar && avatarImg) {
+    avatar.style.cursor = 'zoom-in';
+
+    avatar.addEventListener('click', () => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0); display: flex;
+            align-items: center; justify-content: center;
+            transition: background 0.3s ease;
+            cursor: zoom-out;
+        `;
+
+        const img = document.createElement('img');
+        img.src = avatarImg.src;
+        img.style.cssText = `
+            width: 100px; height: 100px;
+            border-radius: 50%; object-fit: cover;
+            transform: scale(1); opacity: 1;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 0 rgba(0,0,0,0);
+        `;
+
+        overlay.appendChild(img);
+        document.body.appendChild(overlay);
+
+        const rect = avatar.getBoundingClientRect();
+        img.style.position = 'fixed';
+        img.style.left = rect.left + 'px';
+        img.style.top = rect.top + 'px';
+        img.style.margin = '0';
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                overlay.style.background = 'rgba(0,0,0,0.85)';
+                img.style.cssText = `
+                    position: fixed;
+                    width: min(85vw, 380px); height: min(85vw, 380px);
+                    border-radius: 24px; object-fit: cover;
+                    left: 50%; top: 50%;
+                    transform: translate(-50%, -50%);
+                    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+                    cursor: zoom-out;
+                `;
+            });
+        });
+
+        const close = () => {
+            overlay.style.background = 'rgba(0,0,0,0)';
+            img.style.cssText = `
+                position: fixed;
+                width: 100px; height: 100px;
+                border-radius: 50%; object-fit: cover;
+                left: ${rect.left}px; top: ${rect.top}px;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: none;
+            `;
+            setTimeout(() => overlay.remove(), 350);
+        };
+
+        overlay.addEventListener('click', close);
+    });
+}
