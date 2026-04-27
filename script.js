@@ -107,7 +107,6 @@ if (chatInput) {
     chatInput.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
 }
 
-/* === AGE WARNING FOR PINTEREST === */
 const pinterestLink = document.getElementById('pinterest-link');
 const ageWarningModal = document.getElementById('age-warning-modal');
 const ageWarningOverlay = document.getElementById('age-warning-overlay');
@@ -150,3 +149,45 @@ if (ageWarningOverlay) {
         pinterestUrl = '';
     });
 }
+
+setTimeout(() => {
+    const bubble = document.createElement('div');
+    bubble.id = 'chat-hint';
+    bubble.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: rgba(15, 15, 20, 0.95);
+        border: 1px solid rgba(200, 181, 255, 0.3);
+        border-radius: 16px 16px 4px 16px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: #f0eff5;
+        z-index: 999;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        cursor: pointer;
+        max-width: 220px;
+    `;
+    bubble.innerText = '💬 O que deseja saber sobre Felipe?';
+    document.body.appendChild(bubble);
+
+    bubble.onclick = () => {
+        bubble.remove();
+        chatWindow.classList.remove('hidden');
+    };
+
+    chatToggle.onclick = () => {
+        bubble.remove();
+        chatWindow.classList.toggle('hidden');
+    };
+
+    setTimeout(() => {
+        if (document.getElementById('chat-hint')) {
+            bubble.style.opacity = '0';
+            bubble.style.transition = 'opacity 0.5s';
+            setTimeout(() => bubble.remove(), 500);
+        }
+    }, 6000);
+}, 2000);
