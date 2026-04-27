@@ -93,7 +93,7 @@ Acesse: [http://localhost:3000](http://localhost:3000)
 
 | Pacote       | Uso                              |
 |--------------|----------------------------------|
-| `express`    | Servidor HTTP  (por enquanto)                  |
+| `express`    | Servidor HTTP                    |
 | `groq-sdk`   | Integração com a API do Groq     |
 | `cors`       | Permitir requisições cross-origin|
 | `dotenv`     | Leitura do `.env`                |
