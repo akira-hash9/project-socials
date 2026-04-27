@@ -78,7 +78,7 @@ async function sendMessage() {
 
     try {
         // Mudei para http://localhost:3000/ask para garantir que acerte a porta do Node
-        const res = await fetch('http://localhost:3000/ask', {
+        const res = await fetch('https://sua-url.up.railway.app/ask', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: text })
