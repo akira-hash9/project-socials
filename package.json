@@ -1,0 +1,21 @@
+{
+  "name": "project-socials",
+  "version": "1.0.0",
+  "description": "Uma página de perfil minimalista e moderna que centraliza todos os seus links de redes sociais e portfólio. Design responsivo com animações suaves e efeitos visuais sofisticados.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "groq-sdk": "^1.1.2"
+  }
+}
