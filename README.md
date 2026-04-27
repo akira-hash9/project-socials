@@ -130,6 +130,7 @@ Envia uma pergunta para a IA e recebe uma resposta baseada no contexto da bio.
 
 - Nunca suba o `.env` para o repositório
 - Adicione `.env` ao `.gitignore`:
+- Adicione bio/sobre mim.txt (seu treinamento da IA) ao ".gitignore"
 
 ```
 .env
