@@ -1,4 +1,3 @@
-// === 1. ANIMAÇÕES VISUAIS (Glow, Parallax e Ripple) ===
 const glow = document.getElementById('cursorGlow');
 let mx = window.innerWidth / 2, my = window.innerHeight / 2;
 let cx = mx, cy = my;
@@ -45,7 +44,6 @@ document.querySelectorAll('.link-card').forEach(card => {
     });
 });
 
-// === 2. LÓGICA DO CHAT (INTEGRAÇÃO COM BACKEND) ===
 const chatToggle = document.getElementById('chat-toggle');
 const chatWindow = document.getElementById('chat-window');
 const chatClose = document.getElementById('chat-close');
@@ -53,16 +51,15 @@ const chatInput = document.getElementById('chat-input');
 const chatSend = document.getElementById('chat-send');
 const chatMessages = document.getElementById('chat-messages');
 
-// Abrir e fechar
+let historico = [];
+
 if (chatToggle) chatToggle.onclick = () => chatWindow.classList.toggle('hidden');
 if (chatClose) chatClose.onclick = () => chatWindow.classList.add('hidden');
 
-// Função de Envio
 async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
 
-    // Mostra mensagem do usuário
     chatInput.value = '';
     chatMessages.innerHTML += `
         <div style="margin-bottom: 12px; text-align: right;">
@@ -70,27 +67,26 @@ async function sendMessage() {
                 <b>Você:</b> ${text}
             </span>
         </div>`;
-    
-    // Mostra "Digitando..."
+
     const loadingId = "loading-" + Date.now();
     chatMessages.innerHTML += `<div id="${loadingId}" style="margin-bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0.8;">Felipe AI está pensando...</div>`;
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-        // Mudei para http://localhost:3000/ask para garantir que acerte a porta do Node
         const res = await fetch('https://project-socials-production.up.railway.app/ask', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: text })
+            body: JSON.stringify({ prompt: text, historico })
         });
-        
+
         const data = await res.json();
-        
-        // Remove "pensando"
+
+        historico.push({ role: "user", content: text });
+        historico.push({ role: "assistant", content: data.text });
+
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.remove();
 
-        // Adiciona a resposta da IA (usando data.text que é o que o server envia)
         chatMessages.innerHTML += `
             <div style="margin-bottom: 12px; text-align: left;">
                 <span style="background: rgba(200,181,255,0.15); padding: 8px 12px; border-radius: 12px; display: inline-block; font-size: 13px; border: 1px solid rgba(200,181,255,0.2);">
@@ -102,29 +98,11 @@ async function sendMessage() {
         if (loadingEl) loadingEl.innerText = "Erro: O servidor Node está offline.";
         console.error("Erro no chat:", err);
     }
-    
+
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 if (chatSend) chatSend.onclick = sendMessage;
 if (chatInput) {
     chatInput.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
-}
-
-let historico = [];
-
-async function enviarMensagem(prompt) {
-    const res = await fetch('/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, historico })
-    });
-
-    const data = await res.json();
-
-    // atualiza histórico com a troca atual
-    historico.push({ role: "user", content: prompt });
-    historico.push({ role: "assistant", content: data.text });
-
-    return data.text;
 }
