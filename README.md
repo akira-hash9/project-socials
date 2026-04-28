@@ -1,4 +1,4 @@
-# Felipe — @fe_kl9 · Social Links Hub
+# Felipe — @fe_kl9 git akira-hash9 · Social Links Hub
 
 Portfólio pessoal com chat inteligente integrado, powered by **Groq + LLaMA 3.3**.
 
@@ -62,7 +62,7 @@ resposta exibida no chat
 
 ```bash
 # Clone o repositório
-git clone https://github.com/fe_kl9/project-socials
+git clone https://github.com/akira-hash9/project-socials
 cd project-socials
 
 # Instale as dependências
