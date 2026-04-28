@@ -69,7 +69,7 @@ async function sendMessage() {
         </div>`;
 
     const loadingId = "loading-" + Date.now();
-    chatMessages.innerHTML += `<div id="${loadingId}" style="margin-bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0.8;">Felipe AI está pensando...</div>`;
+    chatMessages.innerHTML += `<div id="${loadingId}" style="margin-bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0.8;">Makima AI está pensando...</div>`;
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
@@ -90,7 +90,7 @@ async function sendMessage() {
         chatMessages.innerHTML += `
             <div style="margin-bottom: 12px; text-align: left;">
                 <span style="background: rgba(200,181,255,0.15); padding: 8px 12px; border-radius: 12px; display: inline-block; font-size: 13px; border: 1px solid rgba(200,181,255,0.2);">
-                    <b>Felipe AI:</b> ${data.text || "Não consegui processar isso agora."}
+                    <b>Makima AI:</b> ${data.text || "Não consegui processar isso agora."}
                 </span>
             </div>`;
     } catch (err) {
