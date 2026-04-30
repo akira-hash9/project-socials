@@ -59,11 +59,8 @@ let suggestionsContainer = null;
 let carregandoSugestoes = false;
 
 const perguntasPadrao = [
-    'Quais são suas habilidades?',
-    'Quais projetos você já fez?',
-    'Como entrar em contato?',
+    'Como posso entrar em contato?',
     'Qual é sua formação?',
-    'Você está disponível para freela?'
 ];
 
 async function carregarSugestoes() {
