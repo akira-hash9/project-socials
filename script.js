@@ -51,16 +51,129 @@ const chatInput = document.getElementById('chat-input');
 const chatSend = document.getElementById('chat-send');
 const chatMessages = document.getElementById('chat-messages');
 
-let historico = [];
+// Fix zoom no mobile
+if (chatInput) chatInput.style.fontSize = '16px';
 
-if (chatToggle) chatToggle.onclick = () => chatWindow.classList.toggle('hidden');
+let historico = [];
+let suggestionsContainer = null;
+let carregandoSugestoes = false;
+
+const perguntasPadrao = [
+    'Quais são suas habilidades?',
+    'Quais projetos você já fez?',
+    'Como entrar em contato?',
+    'Qual é sua formação?',
+    'Você está disponível para freela?'
+];
+
+async function carregarSugestoes() {
+    if (suggestionsContainer || carregandoSugestoes || historico.length > 0) return;
+    carregandoSugestoes = true;
+
+    let perguntas = perguntasPadrao;
+
+    try {
+        const res = await fetch('/faq');
+        const faq = await res.json();
+        if (faq.length >= 3) {
+            perguntas = faq.map(f => f.texto);
+        }
+    } catch (e) {}
+
+    if (historico.length > 0) { carregandoSugestoes = false; return; }
+
+    suggestionsContainer = document.createElement('div');
+    suggestionsContainer.id = 'chat-suggestions';
+    suggestionsContainer.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px 12px 4px;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        opacity: 1;
+        transform: translateY(0);
+    `;
+
+    const label = document.createElement('div');
+    label.style.cssText = `
+        font-size: 10px;
+        color: rgba(200,181,255,0.5);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 2px;
+    `;
+    label.innerText = 'Perguntas frequentes';
+    suggestionsContainer.appendChild(label);
+
+    perguntas.slice(0, 5).forEach((pergunta, i) => {
+        const btn = document.createElement('button');
+        btn.innerText = pergunta;
+        btn.style.cssText = `
+            background: rgba(200,181,255,0.07);
+            border: 1px solid rgba(200,181,255,0.15);
+            border-radius: 20px;
+            color: #f0eff5;
+            font-size: 12px;
+            padding: 6px 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            animation: fadeUp 0.3s ease forwards;
+            animation-delay: ${i * 0.06}s;
+        `;
+        btn.onmouseenter = () => {
+            btn.style.background = 'rgba(200,181,255,0.15)';
+            btn.style.borderColor = 'rgba(200,181,255,0.35)';
+            btn.style.transform = 'translateX(3px)';
+        };
+        btn.onmouseleave = () => {
+            btn.style.background = 'rgba(200,181,255,0.07)';
+            btn.style.borderColor = 'rgba(200,181,255,0.15)';
+            btn.style.transform = 'translateX(0)';
+        };
+        btn.onclick = () => {
+            chatInput.value = pergunta;
+            esconderSugestoes();
+            sendMessage();
+        };
+        suggestionsContainer.appendChild(btn);
+    });
+
+    chatMessages.parentNode.insertBefore(suggestionsContainer, chatMessages);
+    carregandoSugestoes = false;
+}
+
+function esconderSugestoes() {
+    if (!suggestionsContainer) return;
+    suggestionsContainer.style.opacity = '0';
+    suggestionsContainer.style.transform = 'translateY(-8px)';
+    setTimeout(() => {
+        if (suggestionsContainer) {
+            suggestionsContainer.remove();
+            suggestionsContainer = null;
+        }
+    }, 400);
+}
+
+if (chatToggle) {
+    chatToggle.onclick = () => {
+        chatWindow.classList.toggle('hidden');
+        if (!chatWindow.classList.contains('hidden') && !suggestionsContainer && historico.length === 0) {
+            carregarSugestoes();
+        }
+    };
+}
+
 if (chatClose) chatClose.onclick = () => chatWindow.classList.add('hidden');
 
 async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
 
+    esconderSugestoes();
     chatInput.value = '';
+
     chatMessages.innerHTML += `
         <div style="margin-bottom: 12px; text-align: right;">
             <span style="background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 12px; display: inline-block; font-size: 13px;">
@@ -105,6 +218,7 @@ async function sendMessage() {
 if (chatSend) chatSend.onclick = sendMessage;
 if (chatInput) {
     chatInput.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
+    chatInput.addEventListener('focus', esconderSugestoes);
 }
 
 const pinterestLink = document.getElementById('pinterest-link');
@@ -176,11 +290,7 @@ setTimeout(() => {
     bubble.onclick = () => {
         bubble.remove();
         chatWindow.classList.remove('hidden');
-    };
-
-    chatToggle.onclick = () => {
-        bubble.remove();
-        chatWindow.classList.toggle('hidden');
+        carregarSugestoes();
     };
 
     setTimeout(() => {
@@ -259,3 +369,151 @@ if (avatar && avatarImg) {
         overlay.addEventListener('click', close);
     });
 }
+
+// README Panel
+const readmeContent = `# HUB Fe
+
+Personal hub with social links and an AI assistant trained with information about me.
+
+**Live:** [project-socials-production.up.railway.app](https://project-socials-production.up.railway.app)
+
+---
+
+## Stack
+
+- Node.js + Express
+- Groq API (\`llama-3.1-8b-instant\`)
+- Vanilla JS, HTML, CSS
+
+---
+
+## AI Context
+
+The assistant's behavior is defined by \`.txt\` files inside the \`bio/\` folder. To update what the AI knows, just edit those files — no code changes needed.
+
+---
+
+## Running locally
+
+\`\`\`bash
+git clone https://github.com/akira-hash9/project-socials
+cd project-socials
+npm install
+\`\`\`
+
+Create a \`.env\` file:
+
+\`\`\`
+GROQ_API_KEY=your_key_here
+\`\`\`
+
+\`\`\`bash
+node server.js
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000)
+
+---
+
+## License
+
+MIT — [@fe_kl9](https://github.com/akira-hash9)`;
+
+const readmePanel = document.createElement('div');
+readmePanel.id = 'readme-panel';
+readmePanel.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`;
+
+const readmeToggle = document.createElement('button');
+readmeToggle.id = 'readme-toggle';
+readmeToggle.style.cssText = `
+    background: rgba(15, 15, 20, 0.95);
+    border: 1px solid rgba(200, 181, 255, 0.2);
+    border-radius: 8px;
+    color: rgba(200,181,255,0.7);
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    padding: 6px 10px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+`;
+readmeToggle.innerText = '📄 README.md';
+readmeToggle.onmouseenter = () => {
+    readmeToggle.style.borderColor = 'rgba(200,181,255,0.5)';
+    readmeToggle.style.color = '#f0eff5';
+};
+readmeToggle.onmouseleave = () => {
+    readmeToggle.style.borderColor = 'rgba(200,181,255,0.2)';
+    readmeToggle.style.color = 'rgba(200,181,255,0.7)';
+};
+
+const readmeBox = document.createElement('div');
+readmeBox.id = 'readme-box';
+let readmeOpen = false;
+readmeBox.style.cssText = `
+    background: rgba(10, 10, 15, 0.97);
+    border: 1px solid rgba(200, 181, 255, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 8px;
+    width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #c8c8d8;
+    opacity: 0;
+    transform: translateY(-8px) scaleY(0.95);
+    transform-origin: top;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    display: block;
+`;
+
+function renderMarkdown(md) {
+    return md
+        .replace(/^# (.+)/gm, '<h1 style="color:#f0eff5;font-size:16px;margin:0 0 12px;font-family:inherit;">$1</h1>')
+        .replace(/^## (.+)/gm, '<h2 style="color:#c8b5ff;font-size:13px;margin:16px 0 8px;font-family:inherit;">$2</h2>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f0eff5;">$1</strong>')
+        .replace(/`([^`]+)`/g, '<code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">$1</code>')
+        .replace(/```[\w]*\n([\s\S]*?)```/gm, '<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;overflow-x:auto;margin:8px 0;"><code style="color:#85e3c8;">$1</code></pre>')
+        .replace(/^\- (.+)/gm, '<div style="padding:2px 0;">— $1</div>')
+        .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">')
+        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" style="color:#c8b5ff;text-decoration:none;border-bottom:1px solid rgba(200,181,255,0.3);">$1</a>')
+        .replace(/\n\n/g, '<br>');
+}
+
+readmeBox.innerHTML = renderMarkdown(readmeContent);
+
+readmeToggle.onclick = () => {
+    readmeOpen = !readmeOpen;
+    if (readmeOpen) {
+        readmeBox.style.opacity = '1';
+        readmeBox.style.transform = 'translateY(0) scaleY(1)';
+        readmeBox.style.pointerEvents = 'auto';
+        readmeToggle.innerText = '✕ README.md';
+    } else {
+        readmeBox.style.opacity = '0';
+        readmeBox.style.transform = 'translateY(-8px) scaleY(0.95)';
+        readmeBox.style.pointerEvents = 'none';
+        readmeToggle.innerText = '📄 README.md';
+    }
+};
+
+readmePanel.appendChild(readmeToggle);
+readmePanel.appendChild(readmeBox);
+document.body.appendChild(readmePanel);
