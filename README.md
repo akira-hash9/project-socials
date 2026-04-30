@@ -38,7 +38,7 @@ project-socials/
 
 ## 🤖 Felipe AI — Chat Inteligente
 
-O chat usa **Groq API** com o modelo `llama-3.3-70b-versatile` para responder perguntas sobre Felipe em tempo real.
+O chat usa **Groq API** com o modelo `llama-3.1-8b-instant` para responder perguntas sobre Felipe em tempo real.
 
 O comportamento da IA é definido pelos arquivos `.txt` dentro da pasta `bio/`. Para atualizar o que a IA sabe sobre Felipe, basta editar esses arquivos — sem mexer no código.
 
