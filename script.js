@@ -371,60 +371,90 @@ if (avatar && avatarImg) {
 }
 
 // README Panel
-const readmeContent = `# HUB Fe
+const readmeContent = `
+<div style="margin-bottom:16px;">
+  <div style="color:#f0eff5;font-size:15px;font-weight:bold;margin-bottom:4px;">Felipe — @fe_kl9</div>
+  <div style="color:rgba(200,181,255,0.5);font-size:11px;">git: akira-hash9 · Social Links Hub</div>
+  <div style="color:#c8c8d8;font-size:12px;margin-top:8px;line-height:1.6;">Portfólio pessoal com chat inteligente integrado, powered by Groq + LLaMA.</div>
+</div>
 
-Personal hub with social links and an AI assistant trained with information about me.
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-**Live:** [project-socials-production.up.railway.app](https://project-socials-production.up.railway.app)
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">📁 Estrutura</div>
+<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;overflow-x:auto;font-size:11px;line-height:1.6;color:#85e3c8;">project-socials/
+├── index.html
+├── style.css
+├── script.js
+├── server.js
+├── .env
+├── package.json
+├── assets/
+│   └── images/
+│       └── profile.jpeg
+└── bio/
+    └── sobre mim.txt</pre>
 
----
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-## Stack
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🎨 Paleta de Cores</div>
+<div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
+  <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#0a0a0f;border:1px solid rgba(255,255,255,0.1);"></span><code style="color:#85e3c8;">--bg</code><span style="color:#c8c8d8;">#0a0a0f — Fundo principal</span></div>
+  <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#111118;border:1px solid rgba(255,255,255,0.1);"></span><code style="color:#85e3c8;">--surface</code><span style="color:#c8c8d8;">#111118 — Superfícies</span></div>
+  <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#f0eff5;"></span><code style="color:#85e3c8;">--text</code><span style="color:#c8c8d8;">#f0eff5 — Texto</span></div>
+  <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#c8b5ff;"></span><code style="color:#85e3c8;">--accent</code><span style="color:#c8c8d8;">#c8b5ff — Destaque primário</span></div>
+  <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#85e3c8;"></span><code style="color:#85e3c8;">--accent2</code><span style="color:#c8c8d8;">#85e3c8 — Destaque secundário</span></div>
+</div>
 
-- Node.js + Express
-- Groq API (\`llama-3.1-8b-instant\`)
-- Vanilla JS, HTML, CSS
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
----
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🤖 Makima AI</div>
+<div style="color:#c8c8d8;font-size:12px;line-height:1.7;">
+  O chat usa a API do Groq com o modelo <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">llama-3.1-8b-instant</code> para responder perguntas sobre Felipe em tempo real.<br><br>
+  O comportamento da IA é definido pelos arquivos <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">.txt</code> dentro da pasta <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">bio/</code>. Para atualizar o que ela sabe, basta editar esses arquivos — sem mexer no código.
+</div>
+<div style="margin-top:10px;background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;font-size:11px;color:#85e3c8;line-height:1.8;">
+  Você digita → script.js → POST /ask → server.js → Groq → resposta no chat
+</div>
 
-## AI Context
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-The assistant's behavior is defined by \`.txt\` files inside the \`bio/\` folder. To update what the AI knows, just edit those files — no code changes needed.
-
----
-
-## Running locally
-
-\`\`\`bash
-git clone https://github.com/akira-hash9/project-socials
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🚀 Como Usar</div>
+<div style="color:#c8c8d8;font-size:12px;margin-bottom:8px;">Node.js 18+ e conta gratuita no <a href="https://console.groq.com" target="_blank" style="color:#c8b5ff;text-decoration:none;border-bottom:1px solid rgba(200,181,255,0.3);">Groq Console</a>.</div>
+<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;font-size:11px;color:#85e3c8;overflow-x:auto;line-height:1.8;">git clone https://github.com/akira-hash9/project-socials
 cd project-socials
-npm install
-\`\`\`
+npm install</pre>
+<div style="color:#c8c8d8;font-size:12px;margin:8px 0 4px;">Crie o arquivo <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">.env</code>:</div>
+<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;font-size:11px;color:#85e3c8;overflow-x:auto;">GROQ_API_KEY=sua_chave_aqui</pre>
+<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;font-size:11px;color:#85e3c8;overflow-x:auto;">node server.js</pre>
 
-Create a \`.env\` file:
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-\`\`\`
-GROQ_API_KEY=your_key_here
-\`\`\`
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">📦 Dependências</div>
+<div style="display:flex;flex-direction:column;gap:6px;font-size:11px;color:#c8c8d8;">
+  <div><code style="color:#85e3c8;">express</code> — Servidor HTTP</div>
+  <div><code style="color:#85e3c8;">groq-sdk</code> — Integração com o Groq</div>
+  <div><code style="color:#85e3c8;">cors</code> — Requisições cross-origin</div>
+  <div><code style="color:#85e3c8;">dotenv</code> — Leitura do .env</div>
+</div>
 
-\`\`\`bash
-node server.js
-\`\`\`
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-Open [http://localhost:3000](http://localhost:3000)
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🔒 Segurança</div>
+<div style="color:#c8c8d8;font-size:12px;line-height:1.7;">Nunca suba o <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">.env</code> para o repositório. Confirma que seu <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">.gitignore</code> contém:</div>
+<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;font-size:11px;color:#85e3c8;overflow-x:auto;">.env
+node_modules/</pre>
 
----
+<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-## License
-
-MIT — [@fe_kl9](https://github.com/akira-hash9)`;
+<div style="color:rgba(200,181,255,0.4);font-size:11px;">MIT — feito por <a href="https://github.com/akira-hash9" target="_blank" style="color:#c8b5ff;text-decoration:none;">@fe_kl9</a></div>
+`;
 
 const readmePanel = document.createElement('div');
 readmePanel.id = 'readme-panel';
 readmePanel.style.cssText = `
     position: fixed;
     top: 50%;
-    left: 20px;
+    left: 12px;
     transform: translateY(-50%);
     z-index: 998;
     display: flex;
@@ -447,6 +477,8 @@ readmeToggle.style.cssText = `
     letter-spacing: 0.05em;
     transition: all 0.2s ease;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 `;
 readmeToggle.innerText = '📄 README.md';
 readmeToggle.onmouseenter = () => {
@@ -465,12 +497,14 @@ readmeBox.style.cssText = `
     background: rgba(10, 10, 15, 0.97);
     border: 1px solid rgba(200, 181, 255, 0.15);
     border-radius: 12px;
-    padding: 20px;
+    padding: 16px;
     margin-top: 8px;
-    width: 320px;
-    max-height: 70vh;
+    width: min(300px, 80vw);
+    max-height: 65vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     font-family: 'Courier New', monospace;
     font-size: 12px;
@@ -484,20 +518,7 @@ readmeBox.style.cssText = `
     display: block;
 `;
 
-function renderMarkdown(md) {
-    return md
-        .replace(/^# (.+)/gm, '<h1 style="color:#f0eff5;font-size:16px;margin:0 0 12px;font-family:inherit;">$1</h1>')
-        .replace(/^## (.+)/gm, '<h2 style="color:#c8b5ff;font-size:13px;margin:16px 0 8px;font-family:inherit;">$2</h2>')
-        .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f0eff5;">$1</strong>')
-        .replace(/`([^`]+)`/g, '<code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">$1</code>')
-        .replace(/```[\w]*\n([\s\S]*?)```/gm, '<pre style="background:rgba(200,181,255,0.05);border:1px solid rgba(200,181,255,0.1);border-radius:8px;padding:10px;overflow-x:auto;margin:8px 0;"><code style="color:#85e3c8;">$1</code></pre>')
-        .replace(/^\- (.+)/gm, '<div style="padding:2px 0;">— $1</div>')
-        .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">')
-        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" style="color:#c8b5ff;text-decoration:none;border-bottom:1px solid rgba(200,181,255,0.3);">$1</a>')
-        .replace(/\n\n/g, '<br>');
-}
-
-readmeBox.innerHTML = renderMarkdown(readmeContent);
+readmeBox.innerHTML = readmeContent;
 
 readmeToggle.onclick = () => {
     readmeOpen = !readmeOpen;
@@ -514,6 +535,9 @@ readmeToggle.onclick = () => {
     }
 };
 
+readmePanel.appendChild(readmeToggle);
+readmePanel.appendChild(readmeBox);
+document.body.appendChild(readmePanel);
 readmePanel.appendChild(readmeToggle);
 readmePanel.appendChild(readmeBox);
 document.body.appendChild(readmePanel);
