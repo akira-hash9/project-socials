@@ -342,6 +342,8 @@ body::after {
 .social-btn {
   width: 46px;
   height: 46px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
