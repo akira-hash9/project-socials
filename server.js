@@ -1,7 +1,5 @@
 const express = require('express');
 const Groq = require('groq-sdk');
-const fs = require('fs');
-const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
 
@@ -13,29 +11,18 @@ app.use(express.static('.'));
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 function carregarBio() {
-    const pastaBio = path.join(__dirname, 'bio');
-    if (!fs.existsSync(pastaBio)) {
-        fs.mkdirSync(pastaBio);
-        fs.writeFileSync(
-            path.join(pastaBio, 'bio.txt'),
-            'Felipe é um desenvolvedor e designer focado em experiências digitais.'
-        );
+    if (process.env.SYSTEM_PROMPT) {
+        return process.env.SYSTEM_PROMPT;
     }
-    return fs.readdirSync(pastaBio)
-        .filter(file => file.endsWith('.txt'))
-        .map(file => fs.readFileSync(path.join(pastaBio, file), 'utf-8'))
-        .join('\n\n');
+    return 'Felipe é um desenvolvedor e designer focado em experiências digitais.';
 }
 
 app.post('/ask', async (req, res) => {
-    const { prompt, historico = [] } = req.body; // recebe histórico do front
-
+    const { prompt, historico = [] } = req.body;
     if (!prompt) {
         return res.status(400).json({ text: "Prompt não enviado." });
     }
-
     const contexto = carregarBio();
-
     try {
         const response = await client.chat.completions.create({
             model: "llama-3.1-8b-instant",
@@ -44,11 +31,24 @@ app.post('/ask', async (req, res) => {
                     role: "system",
                     content: `Você é um assistente virtual do portfólio de Felipe. Responda de forma curta e direta, sem saudações repetidas.\n\nContexto:\n${contexto}`
                 },
-                ...historico,  // mensagens anteriores
+                ...historico,
                 {
                     role: "user",
                     content: prompt
                 }
             ],
-            max_tokens: 512, // reduzido para forçar respostas menores
+            max_tokens: 512,
         });
+        const text = response.choices[0].message.content;
+        console.log("Resposta gerada!");
+        res.json({ text });
+    } catch (error) {
+        console.error("Erro:", error.message);
+        res.status(500).json({ text: "Erro ao gerar resposta. Verifique o terminal." });
+    }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor online na porta ${PORT}`);
+});
