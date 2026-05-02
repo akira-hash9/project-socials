@@ -11,7 +11,6 @@ app.use(express.json());
 app.use(express.static('.'));
 
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const FAQ_PATH = path.join(__dirname, 'faq.json');
 
 function carregarBio() {
     const pastaBio = path.join(__dirname, 'bio');
@@ -22,53 +21,19 @@ function carregarBio() {
             'Felipe é um desenvolvedor e designer focado em experiências digitais.'
         );
     }
-    
-    // Carrega todos os arquivos .txt da pasta bio
-    let bioPublica = fs.readdirSync(pastaBio)
+    return fs.readdirSync(pastaBio)
         .filter(file => file.endsWith('.txt'))
         .map(file => fs.readFileSync(path.join(pastaBio, file), 'utf-8'))
         .join('\n\n');
-    
-    // Carrega secrets do .env (não commitados no GitHub)
-    if (process.env.BIO_SECRETS) {
-        bioPublica += '\n\n' + process.env.BIO_SECRETS;
-    }
-    
-    return bioPublica;
 }
-
-function carregarFaq() {
-    if (!fs.existsSync(FAQ_PATH)) {
-        fs.writeFileSync(FAQ_PATH, JSON.stringify([]));
-    }
-    return JSON.parse(fs.readFileSync(FAQ_PATH, 'utf-8'));
-}
-
-function salvarPergunta(pergunta) {
-    const faq = carregarFaq();
-    const existente = faq.find(f => f.texto.toLowerCase() === pergunta.toLowerCase());
-    if (existente) {
-        existente.count++;
-    } else {
-        faq.push({ texto: pergunta, count: 1 });
-    }
-    faq.sort((a, b) => b.count - a.count);
-    fs.writeFileSync(FAQ_PATH, JSON.stringify(faq.slice(0, 20)));
-}
-
-app.get('/faq', (req, res) => {
-    const faq = carregarFaq();
-    res.json(faq.slice(0, 5));
-});
 
 app.post('/ask', async (req, res) => {
-    const { prompt, historico = [] } = req.body;
+    const { prompt, historico = [] } = req.body; // recebe histórico do front
 
     if (!prompt) {
         return res.status(400).json({ text: "Prompt não enviado." });
     }
 
-    salvarPergunta(prompt);
     const contexto = carregarBio();
 
     try {
@@ -79,13 +44,13 @@ app.post('/ask', async (req, res) => {
                     role: "system",
                     content: `Você é um assistente virtual do portfólio de Felipe. Responda de forma curta e direta, sem saudações repetidas.\n\nContexto:\n${contexto}`
                 },
-                ...historico,
+                ...historico,  // mensagens anteriores
                 {
                     role: "user",
                     content: prompt
                 }
             ],
-            max_tokens: 512,
+            max_tokens: 512, // reduzido para forçar respostas menores
         });
 
         const text = response.choices[0].message.content;
@@ -98,7 +63,7 @@ app.post('/ask', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`\n🚀 SERVIDOR ONLINE`);
     console.log(`📂 Bio: ${path.join(__dirname, 'bio')}`);
