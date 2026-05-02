@@ -325,6 +325,8 @@ body::after {
 /* === SOCIALS === */
 .socials {
   display: flex;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: auto;
   justify-content: center;
   align-items: center;
   gap: 12px;
