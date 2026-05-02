@@ -2,10 +2,12 @@ const express = require('express');
 const Groq = require('groq-sdk');
 require('dotenv').config();
 const cors = require('cors');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
+
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 function carregarBio() {
