@@ -19,13 +19,15 @@ function animateGlow() {
 animateGlow();
 
 document.querySelectorAll('.social-btn').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        btn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.25 - 4}px) scale(1.1)`;
-    });
-    btn.addEventListener('mouseleave', () => btn.style.transform = '');
+    if (window.matchMedia('(hover: hover)').matches) {
+        btn.addEventListener('mousemove', e => {
+            const r = btn.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            btn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.25 - 4}px) scale(1.1)`;
+        });
+        btn.addEventListener('mouseleave', () => btn.style.transform = '');
+    }
 });
 
 document.querySelectorAll('.link-card').forEach(card => {
