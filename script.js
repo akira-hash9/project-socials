@@ -457,6 +457,8 @@ readmePanel.style.cssText = `
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: auto;
+    pointer-events: none;
 `;
 
 const readmeToggle = document.createElement('button');
@@ -476,6 +478,7 @@ readmeToggle.style.cssText = `
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    pointer-events: auto;
 `;
 readmeToggle.innerText = '📄 README.md';
 readmeToggle.onmouseenter = () => {
@@ -532,9 +535,6 @@ readmeToggle.onclick = () => {
     }
 };
 
-readmePanel.appendChild(readmeToggle);
-readmePanel.appendChild(readmeBox);
-document.body.appendChild(readmePanel);
 readmePanel.appendChild(readmeToggle);
 readmePanel.appendChild(readmeBox);
 document.body.appendChild(readmePanel);
