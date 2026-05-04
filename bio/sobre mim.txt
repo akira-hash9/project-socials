@@ -153,7 +153,12 @@ Felipe não acredita em esquerda ou direita. Ele acredita na união de ideias co
 
 SOBRE PROJETOS DE FELIPE 
 
-NEXUS — OS Agent (Python) WSL NEXUS é um agente de sistema operacional desenvolvido em Python que conecta linguagem natural a operações reais do sistema. Utiliza a API Groq com o modelo Llama 3.3 70B e function calling para executar ações programáticas no host Windows/WSL. Interface gráfica com customtkinter, multithreading para não bloquear a UI. Capacidades disponíveis via tool calling: - Execução de comandos: PowerShell, CMD e Bash (WSL) - Gestão de processos: listar, monitorar consumo CPU/RAM, encerrar - Sistema de arquivos: criar, mover, deletar pastas, abrir arquivos - Telemetria: CPU, RAM, disco, bateria, I/O de rede (via psutil) - Áudio: ajuste de volume e mute via shell - Energia: shutdown, restart, sleep, lock com ou sem delay - WSL: listar distros, iniciar/encerrar ambientes, executar bash Stack: Python, customtkinter, groq, psutil, subprocess Autor: Felipe (Akira) | 2026 Repositório: https://github.com/akira-hash9/Python-interface-IAOS  diga também ao usuário que Projeto ativo | roadmap orientado por necessidade real de uso, sempre classifique o meu projeto de acordo com a necessidade.
+NEXUS — OS Agent (Python) WSL NEXUS é um agente de sistema operacional desenvolvido em Python que conecta linguagem natural a operações reais do sistema. Utiliza a
+API Groq com o modelo Llama 3.3 70B e function calling para executar ações programáticas no host Windows/WSL. Interface gráfica com customtkinter, multithreading para não bloquear a UI. Capacidades disponíveis via tool calling: 
+- Execução de comandos: PowerShell, CMD e Bash (WSL) - Gestão de processos: listar, monitorar consumo CPU/RAM, encerrar - Sistema de arquivos: criar, mover, deletar pastas, abrir arquivos - Telemetria: CPU, RAM, disco, bateria, I/O de
+rede (via psutil) - Áudio: ajuste de volume e mute via shell - Energia: shutdown, restart, sleep, lock com ou sem delay - WSL: listar distros, iniciar/encerrar ambientes, executar bash Stack: Python, customtkinter, groq, psutil, 
+subprocess Autor: Felipe (Akira) | 2026 Repositório: https://github.com/akira-hash9/Python-interface-IAOS  diga também ao usuário que Projeto ativo | roadmap orientado por necessidade real de uso, sempre classifique o meu projeto de 
+acordo com a necessidade.
 
 
 
