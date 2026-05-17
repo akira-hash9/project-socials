@@ -179,7 +179,7 @@ async function sendMessage() {
         </div>`;
 
     const loadingId = "loading-" + Date.now();
-    chatMessages.innerHTML += `<div id="${loadingId}" style="margin-bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0.8;">Makima AI está pensando...</div>`;
+    chatMessages.innerHTML += `<div id="${loadingId}" style="margin-bottom: 12px; font-size: 13px; color: var(--accent); opacity: 0.8;">G AI está pensando...</div>`;
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
@@ -200,7 +200,7 @@ async function sendMessage() {
         chatMessages.innerHTML += `
             <div style="margin-bottom: 12px; text-align: left;">
                 <span style="background: rgba(200,181,255,0.15); padding: 8px 12px; border-radius: 12px; display: inline-block; font-size: 13px; border: 1px solid rgba(200,181,255,0.2);">
-                    <b>Makima AI:</b> ${data.text || "Não consegui processar isso agora."}
+                    <b>G AI:</b> ${data.text || "Não consegui processar isso agora."}
                 </span>
             </div>`;
     } catch (err) {
@@ -404,7 +404,7 @@ const readmeContent = `
 
 <hr style="border:none;border-top:1px solid rgba(200,181,255,0.1);margin:12px 0;">
 
-<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🤖 Makima AI</div>
+<div style="color:#c8b5ff;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">🤖 G AI</div>
 <div style="color:#c8c8d8;font-size:12px;line-height:1.7;">
   O chat usa a API do Groq com o modelo <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">llama-3.1-8b-instant</code> para responder perguntas sobre Felipe em tempo real.<br><br>
   O comportamento da IA é definido pelos arquivos <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">.txt</code> dentro da pasta <code style="background:rgba(200,181,255,0.1);padding:1px 5px;border-radius:4px;color:#85e3c8;">bio/</code>. Para atualizar o que ela sabe, basta editar esses arquivos — sem mexer no código.
